@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
 
 
 /***
- * Prueba para  ***/
+ * Se debe borrar cuando se comience el proyecto.  ***/
 @Composable
 private fun TextoEnPantalla(name: String) {
 
