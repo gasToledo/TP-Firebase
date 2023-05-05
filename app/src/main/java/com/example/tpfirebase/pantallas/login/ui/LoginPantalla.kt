@@ -1,5 +1,6 @@
 package com.example.tpfirebase.pantallas.login.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,26 +9,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
-import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ShapeDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,12 +32,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -73,7 +68,7 @@ fun PantallaLogin() {
 @Composable
 fun ContenidoDeLaPantalla() {
 
-    AppTheme() {
+    AppTheme {
 
         Scaffold(topBar = { }, bottomBar = { }) {
             Box(
@@ -94,6 +89,7 @@ fun ContenidoDeLaPantalla() {
 @Composable
 private fun DatosLogin() {
 
+    var usuarioRegistrado by remember { mutableStateOf(false) }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -107,6 +103,10 @@ private fun DatosLogin() {
             Spacer(modifier = Modifier.padding(10.dp))
 
             TextoDatosLogin("", "")
+
+            Spacer(modifier = Modifier.padding(vertical = 20.dp))
+
+            BotonIngreso(true)
         }
     }
 }
@@ -125,6 +125,7 @@ private fun TituloDeLaApp() {
 
 @Composable
 private fun TextoDatosLogin(email: String, clave: String) {
+
 
     Column {
 
@@ -266,13 +267,43 @@ private fun IngresoDeEmail(email: String) {
             }
         )
     )
+}
 
+@Composable
+private fun BotonIngreso(usuarioRegistrado: Boolean) {
+
+        Button(
+            onClick = {
+                if (usuarioRegistrado) {
+                    Log.e("CHECK", "el usuario es valido")
+
+                } else {
+                    Log.e("CHECK", "Usuario no encontrado")
+                }
+            },
+            shape = MaterialTheme.shapes.extraLarge,
+            elevation = ButtonDefaults.buttonElevation(5.dp),
+            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+        ) {
+            Text(text = "INGRESAR", fontSize = 24.sp)
+        }
 }
 
 private fun isClaveError(newClave: String): Boolean {
 
     Usuario.listaUsuarioCache.forEach { user ->
         if (newClave == user.clave) {
+
+            return false
+        }
+    }
+    return true
+}
+
+private fun isEmailError(newEmail: String): Boolean {
+
+    Usuario.listaUsuarioCache.forEach { user ->
+        if (newEmail == user.email) {
 
             return false
         }
