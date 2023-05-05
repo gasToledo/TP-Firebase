@@ -7,7 +7,8 @@ data class Usuario(val nombre: String, val apellido: String, val email: String, 
     //de la pantalla LOGIN.
 
     companion object {
-        val listaUsuarioCache = listOf<Usuario>(
+        val listaUsuarioCache = listOf(
+            Usuario("admin", "admin", "admin", "admin"),
             Usuario("N1", "A1", "a1n1@email.com", "a1n1"),
             Usuario("N2", "A2", "a2n2@email.com", "a2n2"),
             Usuario("N3", "A3", "a3n3@email.com", "a3n3"),
