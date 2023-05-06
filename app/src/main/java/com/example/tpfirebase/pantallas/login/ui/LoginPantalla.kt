@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -49,20 +50,22 @@ import com.example.compose.AppTheme
 import com.example.tpfirebase.pantallas.login.domain.Usuario
 import com.example.tpfirebase.pantallas.navegacion.AppScreens
 import com.example.tpfirebase.pantallas.scaffold.ScaffoldBase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun PantallaLogin(navController: NavController) {
 
     ContenidoDeLaPantalla(navController)
-
 }
 
 @Composable
 fun ContenidoDeLaPantalla(navController: NavController) {
 
     ScaffoldBase(
-        topbar = { },
-        bottombar = { }
+        topbar = {/*No necesita*/ },
+        bottombar = {/*No necesita*/}
     ) { DatosLogin(navController = navController)}
 }
 
@@ -70,6 +73,7 @@ fun ContenidoDeLaPantalla(navController: NavController) {
 private fun DatosLogin(navController: NavController) {
 
     var usuarioRegistrado by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -87,6 +91,7 @@ private fun DatosLogin(navController: NavController) {
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
             BotonIngreso(true, navController)
+
         }
     }
 }

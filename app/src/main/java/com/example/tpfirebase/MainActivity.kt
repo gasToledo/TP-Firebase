@@ -25,15 +25,18 @@ import com.example.compose.AppTheme
 import com.example.tpfirebase.pantallas.login.ui.PantallaLogin
 import com.example.tpfirebase.pantallas.navegacion.AppNavigation
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : ComponentActivity() {
 
     /*Instancia principal de Analytics*/
-    private val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+    private lateinit var firebaseAnalytics : FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
         setContent {
             AppTheme {
                 AppNavigation()
@@ -42,78 +45,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-/***
- * Se debe borrar cuando se comience el proyecto.  ***/
-@Composable
-private fun TextoEnPantalla(name: String) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        //verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.primaryContainer),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Color: $name de la app",
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-            )
-        }
-
-        Box(
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.secondaryContainer),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Color: SECUNDARIO de la app",
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-            )
-
-        }
-
-        Box(
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.tertiaryContainer),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Color: TERCIARIO de la app",
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-            )
-
-        }
-    }
-}
-
-
-/*Función que se utiliza para mostrar un ejemplo
-  de como se veria el resultado final.*/
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun DefaultPreview() {
-    TextoEnPantalla(name = "Primario")
-}
