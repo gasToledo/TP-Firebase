@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.AppTheme
 import com.example.tpfirebase.pantallas.login.ui.PantallaLogin
+import com.example.tpfirebase.pantallas.navegacion.AppNavigation
 import com.google.firebase.analytics.FirebaseAnalytics
 
 
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                PantallaLogin()
+                AppNavigation()
             }
         }
     }

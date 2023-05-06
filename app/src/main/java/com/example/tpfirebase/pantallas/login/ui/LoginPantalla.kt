@@ -34,7 +34,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -43,51 +42,32 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.compose.AppTheme
 import com.example.tpfirebase.pantallas.login.domain.Usuario
+import com.example.tpfirebase.pantallas.navegacion.AppScreens
+import com.example.tpfirebase.pantallas.scaffold.ScaffoldBase
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun DefaultPreview() {
+fun PantallaLogin(navController: NavController) {
 
-    PantallaLogin()
+    ContenidoDeLaPantalla(navController)
 
 }
 
 @Composable
-fun PantallaLogin() {
+fun ContenidoDeLaPantalla(navController: NavController) {
 
-    ContenidoDeLaPantalla()
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ContenidoDeLaPantalla() {
-
-    AppTheme {
-
-        Scaffold(topBar = { }, bottomBar = { }) {
-            Box(
-                modifier = Modifier
-                    .background(color = MaterialTheme.colorScheme.background)
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(5.dp)
-            ) {
-
-                DatosLogin()
-
-            }
-        }
-    }
+    ScaffoldBase(
+        topbar = { },
+        bottombar = { }
+    ) { DatosLogin(navController = navController)}
 }
 
 @Composable
-private fun DatosLogin() {
+private fun DatosLogin(navController: NavController) {
 
     var usuarioRegistrado by remember { mutableStateOf(false) }
     LazyColumn(
@@ -106,7 +86,7 @@ private fun DatosLogin() {
 
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
 
-            BotonIngreso(true)
+            BotonIngreso(true, navController)
         }
     }
 }
@@ -270,23 +250,24 @@ private fun IngresoDeEmail(email: String) {
 }
 
 @Composable
-private fun BotonIngreso(usuarioRegistrado: Boolean) {
+private fun BotonIngreso(usuarioRegistrado: Boolean, navController: NavController) {
 
-        Button(
-            onClick = {
-                if (usuarioRegistrado) {
-                    Log.e("CHECK", "el usuario es valido")
+    Button(
+        onClick = {
+            if (usuarioRegistrado) {
+                Log.e("CHECK", "el usuario es valido")
+                navController.navigate(route = AppScreens.PantallaMenuPrincipal.ruta)
 
-                } else {
-                    Log.e("CHECK", "Usuario no encontrado")
-                }
-            },
-            shape = MaterialTheme.shapes.extraLarge,
-            elevation = ButtonDefaults.buttonElevation(5.dp),
-            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
-        ) {
-            Text(text = "INGRESAR", fontSize = 24.sp)
-        }
+            } else {
+                Log.e("CHECK", "Usuario no encontrado")
+            }
+        },
+        shape = MaterialTheme.shapes.extraLarge,
+        elevation = ButtonDefaults.buttonElevation(5.dp),
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+    ) {
+        Text(text = "INGRESAR", fontSize = 24.sp)
+    }
 }
 
 private fun isClaveError(newClave: String): Boolean {
