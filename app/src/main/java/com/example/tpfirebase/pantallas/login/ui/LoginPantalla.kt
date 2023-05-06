@@ -52,12 +52,19 @@ import com.example.tpfirebase.pantallas.navegacion.AppScreens
 import com.example.tpfirebase.pantallas.scaffold.ScaffoldBase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 
 @Composable
 fun PantallaLogin(navController: NavController) {
 
+    /*Instancia principal de Analytics*/
+    val firebaseAnalytics = Firebase.analytics
     ContenidoDeLaPantalla(navController)
+    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+        param(FirebaseAnalytics.Param.SCREEN_NAME, "login")
+        param(FirebaseAnalytics.Param.SCREEN_CLASS, "Pantalla_login")
+    }
 }
 
 @Composable

@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.tpfirebase.pantallas.scaffold.ScaffoldBase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 
 @Preview
@@ -27,15 +28,23 @@ private fun DefaultPreview() {
 
     val navController = rememberNavController()
     PantallaMenuPrincipal(navController)
+
 }
 
 @Composable
 fun PantallaMenuPrincipal(navController: NavController) {
 
+    val firebaseAnalytics = Firebase.analytics
+
     ScaffoldBase(topbar = { /*TODO*/ }, bottombar = { /*TODO*/ }) {
 
         MenuPrincipalContent(navController = navController)
 
+    }
+
+    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+        param(FirebaseAnalytics.Param.SCREEN_NAME, "menu_principal")
+        param(FirebaseAnalytics.Param.SCREEN_CLASS, "Pantalla_menu")
     }
 }
 
